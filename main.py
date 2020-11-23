@@ -1,3 +1,4 @@
+import sys
 from os import system
 from supplementary_functions import print_desk, add_char
 from checking_functions import check_victory
@@ -51,6 +52,12 @@ def main():
                     print_desk(desk)
                     print(colored(f'Game end! The winner is {current_turn} {response[2]}', 'red'))
                     break
+                if all(filled_columns):
+                    system('cls')
+                    print_desk(desk)
+                    print(colored(f'Game end! Draw', 'red'))
+                    break
+
                 # Change turn
                 current_turn = 'R' if current_turn == 'Y' else 'Y'
         elif command == '2':
@@ -63,4 +70,11 @@ def main():
 
 
 if __name__ == '__main__':
+    if sys.platform == 'win32':
+        try:
+            import colorama
+        except ImportError:
+            pass
+        else:
+            colorama.init()
     main()
