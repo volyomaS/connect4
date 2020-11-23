@@ -1,22 +1,25 @@
 import sys
+import argparse
 from os import system
 from supplementary_functions import print_desk, add_char
 from checking_functions import check_victory
 from termcolor import colored
 
 
-def main():
-    width = 7
-    height = 6
+def main(width: int, height: int):
     correct_digits = list(map(str, range(1, width + 1)))
+
     while True:
         desk = [['E'] * width for _ in range(height)]
         filled_columns = [False] * width
         current_turn = 'R'
+
         print(colored('Connect 4 by @volyomaS', 'green'))
         print(colored('Print 1 to start new game', 'yellow'))
         print(colored('Print 2 to exit', 'yellow'))
+
         command = input()
+
         if command == '1':
             while True:
                 # Clear console output
@@ -52,6 +55,8 @@ def main():
                     print_desk(desk)
                     print(colored(f'Game end! The winner is {current_turn} {response[2]}', 'red'))
                     break
+
+                # Check draw
                 if all(filled_columns):
                     system('cls')
                     print_desk(desk)
@@ -77,4 +82,30 @@ if __name__ == '__main__':
             pass
         else:
             colorama.init()
-    main()
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--width")
+    parser.add_argument("--height")
+    args = parser.parse_args()
+    if args.width is None:
+        width = 7
+    else:
+        try:
+            width = int(args.width)
+            if width < 4:
+                print('Invalid width')
+                exit(1)
+        except ValueError:
+            print('Invalid width')
+            exit(1)
+    if args.height is None:
+        height = 6
+    else:
+        try:
+            height = int(args.height)
+            if height < 4:
+                print('Invalid height')
+                exit(1)
+        except ValueError:
+            print('Invalid height')
+            exit(1)
+    main(width, height)
