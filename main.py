@@ -1,6 +1,7 @@
 from os import system
 from supplementary_functions import print_desk, add_char
 from checking_functions import check_victory
+from termcolor import colored
 
 
 def main():
@@ -11,9 +12,9 @@ def main():
         desk = [['E'] * width for _ in range(height)]
         filled_columns = [False] * width
         current_turn = 'R'
-        print('Connect 4 by @volyomaS')
-        print('Print 1 to start new game')
-        print('Print 2 to exit')
+        print(colored('Connect 4 by @volyomaS', 'green'))
+        print(colored('Print 1 to start new game', 'yellow'))
+        print(colored('Print 2 to exit', 'yellow'))
         command = input()
         if command == '1':
             while True:
@@ -21,11 +22,11 @@ def main():
                 system('cls')
 
                 # Print current turn and desk
-                print(f'Current turn: {current_turn} player')
+                print(colored(f'Current turn: {current_turn} player', 'yellow'))
                 print_desk(desk)
 
                 # Ask user to enter column index
-                print('Choose column to append (or "exit" to quit): ', end='')
+                print(colored('Choose column to append (or "exit" to quit): ', 'yellow'), end='')
                 column_ind = input()
                 if column_ind == 'exit':
                     system('cls')
@@ -34,9 +35,9 @@ def main():
                 while column_ind not in correct_digits or 0 >= int(column_ind) or int(column_ind) > width or \
                         filled_columns[int(column_ind) - 1]:
                     system('cls')
-                    print(f'Current turn: {current_turn} player')
+                    print(colored(f'Current turn: {current_turn} player', 'yellow'))
                     print_desk(desk)
-                    print('Wrong column index. Enter new column ind: ', end='')
+                    print(colored('Wrong column index. Enter new column ind: ', 'yellow'), end='')
                     column_ind = input()
 
                 # Add char to chosen column
@@ -48,7 +49,7 @@ def main():
                 if response[0]:
                     system('cls')
                     print_desk(desk)
-                    print(f'Game end! The winner is {current_turn} {response[2]}')
+                    print(colored(f'Game end! The winner is {current_turn} {response[2]}', 'red'))
                     break
                 # Change turn
                 current_turn = 'R' if current_turn == 'Y' else 'Y'
@@ -56,9 +57,9 @@ def main():
             break
         else:
             system('cls')
-            print('Wrong command')
+            print(colored('Wrong command', 'red'))
     system('cls')
-    print('Thanks for playing!')
+    print(colored('Thanks for playing!', 'green'))
 
 
 if __name__ == '__main__':
